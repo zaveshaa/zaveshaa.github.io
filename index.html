@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaveshaa | Портфолио</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            cursor: none;
+            color: white;
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        .level-4 { background: linear-gradient(to bottom, #4568DC, #1e88e5); }
+        .level-5 { background: linear-gradient(to bottom, #1e88e5, #0d47a1); }
+        .level-6 { background: linear-gradient(to bottom, #0d47a1, #000051); }
+        .level-7 { background: linear-gradient(to bottom, #000051, #000000); }
+
+        .content-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-me {
+            text-align: center;
+        }
+
+        .about-me h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #aac8ff;
+        }
+
+        .about-me p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .project-card {
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            scroll-snap-align: start;
+            border-left: 3px solid #7fa8ff;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            color: #aac8ff;
+        }
+
+        .skill-card {
+            min-width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .contacts {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .contact-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .contact-btn.copied::after {
+            content: "Скопировано!";
+            position: absolute;
+            left: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .water-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .light-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.02) 0%,
+                rgba(255, 255, 255, 0) 20%,
+                rgba(255, 255, 255, 0.02) 40%,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0.02) 80%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 200%;
+            animation: rays 15s linear infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes rays {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float-up linear infinite;
+            filter: blur(0.5px);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) scale(0.2);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .language-switcher {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .lang-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                width: 85%;
+                padding: 20px;
+            }
+            
+            .contacts {
+                left: 10px;
+                gap: 10px;
+            }
+            
+            .contact-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .language-switcher {
+                left: 10px;
+                bottom: 10px;
+                gap: 8px;
+            }
+            
+            .lang-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="scroll-container">
+        <section class="level-4">
+            <div class="water-effect">
+                <div class="light-rays" id="lightRays"></div>
+            </div>
+            <div class="bubbles" id="surfaceBubbles"></div>
+            
+            <div class="content-box about-me">
+                <h2>Дима</h2>
+                <p>Привет! Меня зовут Дима, я только создал этот сайт с портфолио так что тут пока ничего нет)</p>
+            </div>
+        </section>
+
+        <section class="level-5">
+            <div class="water-effect">
+                <div class="light-rays" id="lightRays5"></div>
+            </div>
+            <div class="bubbles" id="shallowBubbles"></div>
+            
+            <div class="content-box">
+                <h2 style="text-align: center; margin-bottom: 30px;">Мои проекты</h2>
+                <p style="text-align: center;">Пока ничего не добавил :)</p>
+            </div>
+        </section>
+
+        <section class="level-6">
+            <div class="water-effect">
+                <div class="light-rays" id="lightRays6"></div>
+            </div>
+            <div class="bubbles" id="deepBubbles"></div>
+            
+            <div class="content-box">
+                <h2 style="text-align: center; margin-bottom: 30px;">Мои навыки</h2>
+                <p style="text-align: center;">Пока ничего не добавил :)</p>
+            </div>
+        </section>
+
+        <section class="level-7">
+            <div class="water-effect">
+                <div class="light-rays" id="lightRays7"></div>
+            </div>
+            <div class="bubbles" id="abyssBubbles"></div>
+            
+            <div class="content-box" style="text-align: center;">
+                <h2>Давайте работать вместе!</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 40px;">Я открыт для новых проектов и сотрудничества</p>
+                
+                <div style="display: inline-block; text-align: left;">
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Великий Новгород, Россия</p>
+                </div>
+            </div>
+            
+            <div class="contacts">
+                <button class="contact-btn" id="tg-btn" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </button>
+                
+                <button class="contact-btn" id="gh-btn" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </button>
+                
+                <button class="contact-btn" id="email-btn" title="Скопировать email">
+                    <i class="fas fa-envelope"></i>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <script>
+        function createBubbles(container, count, baseSpeed, sizeVariation) {
+            for (let i = 0; i < count; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.bottom = Math.random() * 20 + 'px';
+                const size = 2 + Math.random() * sizeVariation;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                const speed = baseSpeed + Math.random() * baseSpeed;
+                bubble.style.animationDuration = speed + 's';
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(bubble);
+            }
+        }
+
+        createBubbles(document.getElementById('surfaceBubbles'), 30, 12, 6);
+        createBubbles(document.getElementById('shallowBubbles'), 40, 15, 8);
+        createBubbles(document.getElementById('deepBubbles'), 50, 18, 10);
+        createBubbles(document.getElementById('abyssBubbles'), 60, 20, 12);
+
+        const scrollContainer = document.querySelector('.scroll-container');
+        let currentDepth = 4;
+        let mouseX = 0;
+        let mouseY = 0;
+        const cursor = document.getElementById('customCursor');
+        let isScrolling = false;
+        let scrollTimeout;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            
+            updateLightDirection(mouseX, mouseY);
+            
+            if (currentDepth >= 4 && Math.random() > 0.9) {
+                createMouseBubble(mouseX, mouseY);
+            }
+        });
+
+        function createMouseBubble(x, y) {
+            const bubblesContainer = 
+                currentDepth === 4 ? document.getElementById('surfaceBubbles') :
+                currentDepth === 5 ? document.getElementById('shallowBubbles') :
+                currentDepth === 6 ? document.getElementById('deepBubbles') :
+                document.getElementById('abyssBubbles');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.left = x + 'px';
+            bubble.style.bottom = (window.innerHeight - y) + 'px';
+            const size = 5 + Math.random() * 15;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            const speed = 4 + Math.random() * 8;
+            bubble.style.animationDuration = speed + 's';
+            bubblesContainer.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, speed * 1000);
+        }
+
+        function updateLightDirection(x, y) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const angleX = (x - centerX) / centerX * 30;
+            const angleY = (y - centerY) / centerY * 30;
+            
+            const lightRays = document.getElementById('lightRays');
+            const lightRays5 = document.getElementById('lightRays5');
+            const lightRays6 = document.getElementById('lightRays6');
+            const lightRays7 = document.getElementById('lightRays7');
+            
+            if (lightRays) lightRays.style.transform = `rotateX(${angleY}deg) rotateY(${-angleX}deg)`;
+            if (lightRays5) lightRays5.style.transform = `rotateX(${angleY}deg) rotateY(${-angleX}deg)`;
+            if (lightRays6) lightRays6.style.transform = `rotateX(${angleY}deg) rotateY(${-angleX}deg)`;
+            if (lightRays7) lightRays7.style.transform = `rotateX(${angleY}deg) rotateY(${-angleX}deg)`;
+        }
+
+        document.getElementById('tg-btn').addEventListener('click', () => {
+            window.open('https://t.me/zaveshaa', '_blank');
+        });
+
+        document.getElementById('gh-btn').addEventListener('click', () => {
+            window.open('https://github.com/zaveshaa', '_blank');
+        });
+
+        document.getElementById('email-btn').addEventListener('click', () => {
+            const email = 'i@zaveshaadev.ru';
+            navigator.clipboard.writeText(email).then(() => {
+                const btn = document.getElementById('email-btn');
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        });
+
+        scrollContainer.addEventListener('scroll', () => {
+            const scrollPosition = scrollContainer.scrollTop;
+            currentDepth = Math.floor(scrollPosition / window.innerHeight) + 4;
+            
+            if (!isScrolling) return;
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const currentScroll = scrollContainer.scrollTop;
+                const pageHeight = window.innerHeight;
+                const targetScroll = Math.round(currentScroll / pageHeight) * pageHeight;
+                
+                scrollContainer.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+                
+                isScrolling = false;
+            }, 100);
+        });
+
+        scrollContainer.addEventListener('wheel', (e) => {
+            isScrolling = true;
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
+        }, { passive: true });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                const currentScroll = scrollContainer.scrollTop;
+                const pageHeight = window.innerHeight;
+                const targetScroll = e.key === 'ArrowDown' ? 
+                    Math.ceil(currentScroll / pageHeight) * pageHeight :
+                    Math.floor(currentScroll / pageHeight) * pageHeight;
+                
+                scrollContainer.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+                e.preventDefault();
+            }
+        });
+
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const translations = {
+            ru: {
+                title: "Zaveshaa | Портфолио",
+                aboutTitle: "Zaveshaa ",
+                aboutText1: "Привет! Меня зовут Дима, я только создал этот сайт с портфолио так что тут пока ничего нет)",
+                projectsTitle: "Мои проекты",
+                projectsText: "Пока ничего не добавил :)",
+                skillsTitle: "Мои навыки",
+                skillsText: "Пока ничего не добавил :)",
+                contactTitle: "Давайте работать вместе!",
+                contactText: "Я открыт для новых проектов и сотрудничества",
+                location: "Великий Новгород, Россия"
+            },
+            en: {
+                title: "Zaveshaa | Portfolio",
+                aboutTitle: "Zaveshaa",
+                aboutText1: "Hi! I'm Dima, I just created this portfolio site so there's nothing here yet)",
+                projectsTitle: "My Projects",
+                projectsText: "Nothing added yet :)",
+                skillsTitle: "My Skills",
+                skillsText: "Nothing added yet :)",
+                contactTitle: "Let's work together!",
+                contactText: "I'm open to new projects and collaborations",
+                location: "Veliky Novgorod, Russia"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.title = translations[lang].title;
+            document.querySelector('.about-me h2').textContent = translations[lang].aboutTitle;
+            document.querySelector('.about-me p').textContent = translations[lang].aboutText1;
+            
+            const projectsBox = document.querySelector('.level-5 .content-box');
+            projectsBox.querySelector('h2').textContent = translations[lang].projectsTitle;
+            projectsBox.querySelector('p').textContent = translations[lang].projectsText;
+            
+            const skillsBox = document.querySelector('.level-6 .content-box');
+            skillsBox.querySelector('h2').textContent = translations[lang].skillsTitle;
+            skillsBox.querySelector('p').textContent = translations[lang].skillsText;
+            
+            const contactBox = document.querySelector('.level-7 .content-box');
+            contactBox.querySelector('h2').textContent = translations[lang].contactTitle;
+            contactBox.querySelector('p').textContent = translations[lang].contactText;
+            contactBox.querySelectorAll('p')[1].innerHTML = `<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> ${translations[lang].location}`;
+            
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                changeLanguage(btn.dataset.lang);
+            });
+        });
+
+        changeLanguage('ru');
+        updateLightDirection(window.innerWidth / 2, window.innerHeight / 2);
+    </script>
+</body>
+</html>
