@@ -12,8 +12,13 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Arial', sans-serif;
-            cursor: none;
             color: white;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
         }
 
         .scroll-container {
@@ -277,29 +282,131 @@
             .content-box {
                 width: 85%;
                 padding: 20px;
+                max-width: 90%;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+            
+            .about-me h2 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+            
+            .about-me p {
+                font-size: 1rem;
+                line-height: 1.5;
             }
             
             .contacts {
                 left: 10px;
                 gap: 10px;
+                flex-direction: row;
+                top: auto;
+                bottom: 20px;
+                transform: none;
+                width: calc(100% - 20px);
+                justify-content: center;
             }
             
             .contact-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .contact-btn.copied::after {
+                left: auto;
+                right: 50px;
+                top: -35px;
             }
             
             .language-switcher {
                 left: 10px;
-                bottom: 10px;
+                bottom: 80px;
                 gap: 8px;
             }
             
             .lang-btn {
-                width: 35px;
-                height: 35px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            #surfaceBubbles .bubble,
+            #shallowBubbles .bubble,
+            #deepBubbles .bubble,
+            #abyssBubbles .bubble {
+                animation-duration: 8s !important;
+            }
+            
+            @media (max-width: 480px), (max-height: 600px) {
+                .light-rays {
+                    animation: none;
+                }
+                
+                .water-effect {
+                    display: none;
+                }
+                
+                .content-box {
+                    backdrop-filter: none;
+                    background-color: rgba(0, 0, 0, 0.7);
+                }
+            }
+            
+            .project-card {
+                min-width: 85%;
+                margin: 0 10px;
+            }
+            
+            .skill-card {
+                min-width: 120px;
+                height: 120px;
+                padding: 15px;
+            }
+            
+            .skill-card i {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .content-box {
+                padding: 15px;
+                width: 90%;
+            }
+            
+            .about-me h2 {
+                font-size: 1.8rem;
+            }
+            
+            .about-me p {
                 font-size: 0.9rem;
+            }
+            
+            .contact-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .lang-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+            .content-box {
+                width: 80%;
+            }
+            
+            .contacts {
+                left: 15px;
+            }
+            
+            .language-switcher {
+                left: 15px;
             }
         }
     </style>
@@ -398,10 +505,13 @@
             }
         }
 
-        createBubbles(document.getElementById('surfaceBubbles'), 30, 12, 6);
-        createBubbles(document.getElementById('shallowBubbles'), 40, 15, 8);
-        createBubbles(document.getElementById('deepBubbles'), 50, 18, 10);
-        createBubbles(document.getElementById('abyssBubbles'), 60, 20, 12);
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const bubbleCount = isMobile ? [15, 20, 25, 30] : [30, 40, 50, 60];
+        
+        createBubbles(document.getElementById('surfaceBubbles'), bubbleCount[0], 12, 6);
+        createBubbles(document.getElementById('shallowBubbles'), bubbleCount[1], 15, 8);
+        createBubbles(document.getElementById('deepBubbles'), bubbleCount[2], 18, 10);
+        createBubbles(document.getElementById('abyssBubbles'), bubbleCount[3], 20, 12);
 
         const scrollContainer = document.querySelector('.scroll-container');
         let currentDepth = 4;
@@ -411,18 +521,24 @@
         let isScrolling = false;
         let scrollTimeout;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+        if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
+            cursor.style.display = 'block';
             
-            updateLightDirection(mouseX, mouseY);
-            
-            if (currentDepth >= 4 && Math.random() > 0.9) {
-                createMouseBubble(mouseX, mouseY);
-            }
-        });
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                
+                updateLightDirection(mouseX, mouseY);
+                
+                if (currentDepth >= 4 && Math.random() > 0.9) {
+                    createMouseBubble(mouseX, mouseY);
+                }
+            });
+        } else {
+            cursor.style.display = 'none';
+        }
 
         function createMouseBubble(x, y) {
             const bubblesContainer = 
@@ -527,6 +643,36 @@
             }
         });
 
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        scrollContainer.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        scrollContainer.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const diff = touchStartY - touchEndY;
+            const threshold = 50;
+            
+            if (Math.abs(diff) > threshold) {
+                const currentScroll = scrollContainer.scrollTop;
+                const pageHeight = window.innerHeight;
+                const targetScroll = diff > 0 ? 
+                    Math.ceil(currentScroll / pageHeight) * pageHeight :
+                    Math.floor(currentScroll / pageHeight) * pageHeight;
+                
+                scrollContainer.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
         const langButtons = document.querySelectorAll('.lang-btn');
         const translations = {
             ru: {
@@ -589,6 +735,14 @@
 
         changeLanguage('ru');
         updateLightDirection(window.innerWidth / 2, window.innerHeight / 2);
+        
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            document.querySelectorAll('.water-effect').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.content-box').forEach(el => {
+                el.style.backdropFilter = 'none';
+                el.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            });
+        }
     </script>
 </body>
 </html>
