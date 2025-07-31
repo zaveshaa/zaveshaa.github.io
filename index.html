@@ -103,6 +103,40 @@
             color: #aac8ff;
         }
 
+        .project-card p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tech-tag {
+            background: rgba(170, 200, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: rgba(170, 200, 255, 0.3);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: rgba(170, 200, 255, 0.5);
+        }
+
         .skill-card {
             min-width: 150px;
             height: 150px;
@@ -120,6 +154,25 @@
         .skill-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
+        }
+
+        .skill-category {
+            margin-bottom: 30px;
+        }
+
+        .skill-category h3 {
+            color: #aac8ff;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid rgba(170, 200, 255, 0.3);
+        }
+
+        .skill-item {
+            background: rgba(170, 200, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
         }
 
         .contacts {
@@ -154,7 +207,7 @@
         }
 
         .contact-btn.copied::after {
-            content: "Скопировано!";
+            content: "Copied!";
             position: absolute;
             left: 50px;
             background: rgba(0, 0, 0, 0.7);
@@ -162,6 +215,10 @@
             border-radius: 5px;
             font-size: 0.8rem;
             white-space: nowrap;
+        }
+
+        .contact-btn.copied.ru::after {
+            content: "Скопировано!";
         }
 
         .water-effect {
@@ -413,6 +470,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <div id="translations" style="display: none;">
+        <div data-lang="ru">
+            <div data-key="title">Zaveshaa | Портфолио</div>
+            <div data-key="aboutTitle">Zaveshaa</div>
+            <div data-key="aboutText1">Привет! Меня зовут Zaveshaa. Я занимаюсь олимпиадным программированием, разработкой игр и веб-приложений. В этом портфолио вы найдёте мои проекты и информацию о моих навыках.</div>
+            <div data-key="projectsTitle">Мои проекты</div>
+            <div data-key="project1Title">Веб-приложение для Яндекс Лицея</div>
+            <div data-key="project1Desc">Учебный проект, созданный в рамках Яндекс Лицея. Веб-приложение для отслеживания привычек с визуализацией в виде ASCII-деревьев, которые растут по мере выполнения целей.</div>
+            <div data-key="project2Title">Песочница на Python</div>
+            <div data-key="project2Desc">Игра-песочница с физикой частиц, реализующая взаимодействие различных материалов (песок, вода, камень, огонь). Позволяет экспериментировать с разными элементами.</div>
+            <div data-key="project3Title">2D-платформер для Яндекс Лицея</div>
+            <div data-key="project3Desc">Игра в жанре "песочница", вдохновлённая Terraria. Особенности: процедурная генерация мира на основе шума Перлина, возможность полной деформации мира.</div>
+            <div data-key="project4Title">Процедурная анимация паука</div>
+            <div data-key="project4Desc">Экспериментальный проект в Unity, реализующий процедурную анимацию передвижения паука. Особое внимание уделено физике движения ног.</div>
+            <div data-key="skillsTitle">Мои навыки</div>
+            <div data-key="hardSkillsTitle">Технические навыки</div>
+            <div data-key="softSkillsTitle">Гибкие навыки</div>
+            <div data-key="languagesTitle">Языки</div>
+            <div data-key="russianLang">Русский (родной)</div>
+            <div data-key="englishLang">Английский (B2 - Upper Intermediate)</div>
+            <div data-key="contactTitle">Давайте работать вместе!</div>
+            <div data-key="contactText">Я открыт к сотрудничеству и новым проектам</div>
+            <div data-key="location">Великий Новгород, Россия</div>
+            <div data-key="projectLink1">Посмотреть на GitHub</div>
+            <div data-key="projectLink2">Играть на itch.io</div>
+            <div data-key="emailTooltip">Скопировать email</div>
+        </div>
+        <div data-lang="en">
+            <div data-key="title">Zaveshaa | Portfolio</div>
+            <div data-key="aboutTitle">Zaveshaa</div>
+            <div data-key="aboutText1">Hi! I'm Zaveshaa, a developer with experience in competitive programming, game development and web applications. Here you'll find my projects and skills information.</div>
+            <div data-key="projectsTitle">My Projects</div>
+            <div data-key="project1Title">Web Application for Yandex Lyceum</div>
+            <div data-key="project1Desc">Educational project created at Yandex Lyceum. A habit tracker web app with visualization in the form of ASCII trees that grow as you complete your goals.</div>
+            <div data-key="project2Title">Python Sandbox</div>
+            <div data-key="project2Desc">A particle physics sandbox game implementing interactions between different materials (sand, water, stone, fire). Allows experimenting with various elements.</div>
+            <div data-key="project3Title">2D Platformer for Yandex Lyceum</div>
+            <div data-key="project3Desc">A sandbox-style game inspired by Terraria. Features include: Perlin noise-based world generation, the possibility of complete transformation of the world.</div>
+            <div data-key="project4Title">Procedural Spider Animation</div>
+            <div data-key="project4Desc">Experimental Unity project implementing procedural spider movement animation. Special attention was paid to leg physics.</div>
+            <div data-key="skillsTitle">My Skills</div>
+            <div data-key="hardSkillsTitle">Technical Skills</div>
+            <div data-key="softSkillsTitle">Soft Skills</div>
+            <div data-key="languagesTitle">Languages</div>
+            <div data-key="russianLang">Russian (Native)</div>
+            <div data-key="englishLang">English (B2 - Upper Intermediate)</div>
+            <div data-key="contactTitle">Let's work together!</div>
+            <div data-key="contactText">I'm open to collaboration and new projects</div>
+            <div data-key="location">Veliky Novgorod, Russia</div>
+            <div data-key="projectLink1">View on GitHub</div>
+            <div data-key="projectLink2">Play on itch.io</div>
+            <div data-key="emailTooltip">Copy email</div>
+        </div>
+    </div>
+
     <div class="scroll-container">
         <section class="level-4">
             <div class="water-effect">
@@ -421,8 +533,8 @@
             <div class="bubbles" id="surfaceBubbles"></div>
             
             <div class="content-box about-me">
-                <h2>Дима</h2>
-                <p>Привет! Меня зовут Дима, я только создал этот сайт с портфолио так что тут пока ничего нет)</p>
+                <h2 data-translate="aboutTitle">Zaveshaa</h2>
+                <p data-translate="aboutText1">Привет! Меня зовут Дима (Zaveshaa). Я занимаюсь олимпиадным программированием, разработкой игр и веб-приложений. В этом портфолио вы найдёте мои проекты и информацию о моих навыках.</p>
             </div>
         </section>
 
@@ -433,8 +545,50 @@
             <div class="bubbles" id="shallowBubbles"></div>
             
             <div class="content-box">
-                <h2 style="text-align: center; margin-bottom: 30px;">Мои проекты</h2>
-                <p style="text-align: center;">Пока ничего не добавил :)</p>
+                <h2 style="text-align: center; margin-bottom: 30px;" data-translate="projectsTitle">Мои проекты</h2>
+                <div class="horizontal-scroll">
+                    <div class="project-card">
+                        <h3 data-translate="project1Title">Веб-приложение для Яндекс Лицея</h3>
+                        <p data-translate="project1Desc">Учебный проект, созданный в рамках Яндекс Лицея. Веб-приложение для отслеживания привычек с визуализацией в виде ASCII-деревьев, которые растут по мере выполнения целей.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">SQL</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <a href="https://github.com/zaveshaa/YanLycWebProject" class="project-link" target="_blank" data-translate="projectLink1">Посмотреть на GitHub</a>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-translate="project2Title">Песочница на Python</h3>
+                        <p data-translate="project2Desc">Игра-песочница с физикой частиц, реализующая взаимодействие различных материалов (песок, вода, камень, огонь, и тд). Позволяет экспериментировать с разными элементами.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Pygame</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <a href="https://dmitryaleksandrov.itch.io/sandbox-pygame" class="project-link" target="_blank" data-translate="projectLink2">Играть на itch.io</a>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-translate="project3Title">2D-платформер для Яндекс Лицея</h3>
+                        <p data-translate="project3Desc">Игра в жанре "песочница", вдохновлённая Terraria. Особенности: процедурная генерация мира на основе шума Перлина, возможность полной деформации мира.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Pygame</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <a href="https://github.com/zaveshaa/Pygame-YL-project" class="project-link" target="_blank" data-translate="projectLink1">Посмотреть на GitHub</a>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-translate="project4Title">Процедурная анимация паука</h3>
+                        <p data-translate="project4Desc">Экспериментальный проект в Unity, реализующий процедурную анимацию передвижения паука. Особое внимание уделено физике движения ног.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">Procedural animation</span>
+                        </div>
+                        <a href="https://zaveshaa.itch.io/depth" class="project-link" target="_blank" data-translate="projectLink2">Играть на itch.io</a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -445,8 +599,45 @@
             <div class="bubbles" id="deepBubbles"></div>
             
             <div class="content-box">
-                <h2 style="text-align: center; margin-bottom: 30px;">Мои навыки</h2>
-                <p style="text-align: center;">Пока ничего не добавил :)</p>
+                <h2 style="text-align: center; margin-bottom: 30px;" data-translate="skillsTitle">Мои навыки</h2>
+                
+                <div class="skill-category">
+                    <h3 data-translate="hardSkillsTitle">Технические навыки</h3>
+                    <div>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">C#</span>
+                        <span class="skill-item">Git</span>
+                        <span class="skill-item">SQL</span>
+                        <span class="skill-item">GitHub</span>
+                        <span class="skill-item">Terminal</span>
+                        <span class="skill-item">Linux</span>
+                        <span class="skill-item">LaTeX</span>
+                        <span class="skill-item">HTML/CSS</span>
+                        <span class="skill-item">Flask</span>
+                        <span class="skill-item">Pygame</span>
+                        <span class="skill-item">Unity</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 data-translate="softSkillsTitle">Гибкие навыки</h3>
+                    <div>
+                        <span class="skill-item">Time Management</span>
+                        <span class="skill-item">Problem Solving</span>
+                        <span class="skill-item">Leadership</span>
+                        <span class="skill-item">Critical Thinking</span>
+                        <span class="skill-item">Teamwork</span>
+                        <span class="skill-item">Patience</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 data-translate="languagesTitle">Языки</h3>
+                    <div>
+                        <span class="skill-item" data-translate="russianLang">Русский (родной)</span>
+                        <span class="skill-item" data-translate="englishLang">Английский (B2 - Upper Intermediate)</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -457,11 +648,11 @@
             <div class="bubbles" id="abyssBubbles"></div>
             
             <div class="content-box" style="text-align: center;">
-                <h2>Давайте работать вместе!</h2>
-                <p style="font-size: 1.3rem; margin-bottom: 40px;">Я открыт для новых проектов и сотрудничества</p>
+                <h2 data-translate="contactTitle">Давайте работать вместе!</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 40px;" data-translate="contactText">Я открыт к сотрудничеству и новым проектам</p>
                 
                 <div style="display: inline-block; text-align: left;">
-                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Великий Новгород, Россия</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> <span data-translate="location">Великий Новгород, Россия</span></p>
                 </div>
             </div>
             
@@ -474,7 +665,7 @@
                     <i class="fab fa-github"></i>
                 </button>
                 
-                <button class="contact-btn" id="email-btn" title="Скопировать email">
+                <button class="contact-btn" id="email-btn" data-translate-title="emailTooltip" title="Скопировать email">
                     <i class="fas fa-envelope"></i>
                 </button>
             </div>
@@ -489,6 +680,57 @@
     </div>
 
     <script>
+        const translations = {};
+        document.querySelectorAll('#translations [data-lang]').forEach(langEl => {
+            const lang = langEl.getAttribute('data-lang');
+            translations[lang] = {};
+            langEl.querySelectorAll('[data-key]').forEach(item => {
+                const key = item.getAttribute('data-key');
+                translations[lang][key] = item.textContent;
+            });
+        });
+
+        function changeLanguage(lang) {
+            document.documentElement.lang = lang;
+            
+            document.title = translations[lang].title;
+            
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            document.querySelectorAll('[data-translate-title]').forEach(el => {
+                const key = el.getAttribute('data-translate-title');
+                if (translations[lang][key]) {
+                    el.setAttribute('title', translations[lang][key]);
+                }
+            });
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            const emailBtn = document.getElementById('email-btn');
+            if (emailBtn.classList.contains('copied')) {
+                emailBtn.classList.remove('ru', 'en');
+                emailBtn.classList.add(lang);
+            }
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                changeLanguage(btn.dataset.lang);
+            });
+        });
+
+        changeLanguage('ru');
+
         function createBubbles(container, count, baseSpeed, sizeVariation) {
             for (let i = 0; i < count; i++) {
                 const bubble = document.createElement('div');
@@ -592,9 +834,10 @@
             const email = 'i@zaveshaadev.ru';
             navigator.clipboard.writeText(email).then(() => {
                 const btn = document.getElementById('email-btn');
-                btn.classList.add('copied');
+                const currentLang = document.querySelector('.lang-btn.active').dataset.lang;
+                btn.classList.add('copied', currentLang);
                 setTimeout(() => {
-                    btn.classList.remove('copied');
+                    btn.classList.remove('copied', currentLang);
                 }, 2000);
             });
         });
@@ -673,67 +916,6 @@
             }
         }
 
-        const langButtons = document.querySelectorAll('.lang-btn');
-        const translations = {
-            ru: {
-                title: "Zaveshaa | Портфолио",
-                aboutTitle: "Zaveshaa ",
-                aboutText1: "Привет! Меня зовут Дима, я только создал этот сайт с портфолио так что тут пока ничего нет)",
-                projectsTitle: "Мои проекты",
-                projectsText: "Пока ничего не добавил :)",
-                skillsTitle: "Мои навыки",
-                skillsText: "Пока ничего не добавил :)",
-                contactTitle: "Давайте работать вместе!",
-                contactText: "Я открыт для новых проектов и сотрудничества",
-                location: "Великий Новгород, Россия"
-            },
-            en: {
-                title: "Zaveshaa | Portfolio",
-                aboutTitle: "Zaveshaa",
-                aboutText1: "Hi! I'm Dima, I just created this portfolio site so there's nothing here yet)",
-                projectsTitle: "My Projects",
-                projectsText: "Nothing added yet :)",
-                skillsTitle: "My Skills",
-                skillsText: "Nothing added yet :)",
-                contactTitle: "Let's work together!",
-                contactText: "I'm open to new projects and collaborations",
-                location: "Veliky Novgorod, Russia"
-            }
-        };
-
-        function changeLanguage(lang) {
-            document.title = translations[lang].title;
-            document.querySelector('.about-me h2').textContent = translations[lang].aboutTitle;
-            document.querySelector('.about-me p').textContent = translations[lang].aboutText1;
-            
-            const projectsBox = document.querySelector('.level-5 .content-box');
-            projectsBox.querySelector('h2').textContent = translations[lang].projectsTitle;
-            projectsBox.querySelector('p').textContent = translations[lang].projectsText;
-            
-            const skillsBox = document.querySelector('.level-6 .content-box');
-            skillsBox.querySelector('h2').textContent = translations[lang].skillsTitle;
-            skillsBox.querySelector('p').textContent = translations[lang].skillsText;
-            
-            const contactBox = document.querySelector('.level-7 .content-box');
-            contactBox.querySelector('h2').textContent = translations[lang].contactTitle;
-            contactBox.querySelector('p').textContent = translations[lang].contactText;
-            contactBox.querySelectorAll('p')[1].innerHTML = `<i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> ${translations[lang].location}`;
-            
-            langButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.lang === lang) {
-                    btn.classList.add('active');
-                }
-            });
-        }
-
-        langButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                changeLanguage(btn.dataset.lang);
-            });
-        });
-
-        changeLanguage('ru');
         updateLightDirection(window.innerWidth / 2, window.innerHeight / 2);
         
         if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
