@@ -1,2 +1,2 @@
 # zaveshaa.gtihub.io
-site
+https://zaveshaa.github.io/
