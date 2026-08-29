@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zaveshaa — portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #f2f2ee;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes shimmer1 { 0% { background-position: 0 0; } 100% { background-position: 128px 128px; } }
+        @keyframes shimmer2 { 0% { background-position: 0 0; } 100% { background-position: -80px 96px; } }
+        @keyframes shimmer3 { 0% { background-position: 0 0; } 100% { background-position: 64px -48px; } }
+
+        .noise { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        .noise::before, .noise::after { content: ''; position: absolute; inset: 0; background-repeat: repeat; }
+        .noise::before {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 96px 96px; animation: shimmer1 3s linear infinite; opacity: 0.35;
+        }
+        .noise::after {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 64px 64px; animation: shimmer2 2.4s linear infinite; opacity: 0.15;
+        }
+        .noise-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: #f2f2ee; }
+        .noise-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 200px 200px; animation: shimmer3 6s linear infinite; opacity: 0.1;
+        }
+
+        .page {
+            position: relative; z-index: 1;
+            max-width: 960px; margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+
+        .back {
+            position: fixed; top: 28px; left: 32px; z-index: 3;
+            font-size: 1.6rem; letter-spacing: 1px; color: #000;
+            text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;
+        }
+        .back:hover { border-bottom-color: #111; }
+
+        .hero { padding: 32px 0 44px; border-bottom: 1px solid #ddd; }
+        .hero h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: 1px; }
+        .hero .role { font-size: 1.05rem; color: #444; margin-top: 6px; }
+        .hero .meta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 0.95rem; color: #444; }
+        .hero .meta a { color: #444; border-bottom: 1px solid #ccc; text-decoration: none; }
+        .hero .meta a:hover { color: #000; border-bottom-color: #111; }
+
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; padding: 34px 0; border-bottom: 1px solid #ddd; }
+        .metric .num { font-size: 1.7rem; letter-spacing: 0.5px; }
+        .metric .lbl { font-size: 0.85rem; color: #666; text-transform: uppercase; letter-spacing: 1.2px; margin-top: 2px; }
+
+        section { padding: 40px 0; border-bottom: 1px solid #ddd; }
+        section:last-of-type { border-bottom: none; }
+        h2 {
+            font-size: 0.85rem; font-weight: 400;
+            text-transform: uppercase; letter-spacing: 2px; color: #666;
+            margin-bottom: 22px;
+        }
+        h2 .no { color: #bbb; margin-right: 10px; }
+
+        .group-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: #999; margin: 26px 0 10px; }
+
+        .entry { display: flex; gap: 18px; padding: 12px 0; border-bottom: 1px solid #ecebe6; align-items: baseline; }
+        .entry:last-of-type { border-bottom: none; }
+        .entry .left { width: 180px; flex-shrink: 0; font-size: 0.95rem; color: #888; }
+        .entry .main { flex: 1; }
+        .entry .row1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+        .entry .title { font-size: 1rem; }
+        .entry .title a { color: #1a1a1a; text-decoration: none; border-bottom: 1px solid transparent; }
+        .entry .title a:hover { border-bottom-color: #111; }
+        .entry .pr { font-size: 0.9rem; color: #666; }
+        .entry .pr a { color: #444; border-bottom: 1px solid #ccc; text-decoration: none; }
+        .entry .pr a:hover { color: #000; border-bottom-color: #111; }
+        .entry .desc { font-size: 0.92rem; color: #444; margin-top: 2px; }
+        .tag {
+            font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+            padding: 1px 8px; border-radius: 2px; border: 1px solid;
+        }
+        .tag.merged { color: #3d6b3d; border-color: #9cbf9c; background: #f4f8f4; }
+        .tag.open { color: #7a5a00; border-color: #d6c08a; background: #fbf8ef; }
+
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
+        .stack-item { font-size: 1rem; color: #333; padding: 6px 0; }
+        .stack-item strong { font-weight: 400; letter-spacing: 0.5px; }
+        .stack-item span { color: #888; }
+
+        .placeholder { color: #999; font-style: italic; font-size: 0.95rem; }
+        .placeholder a { color: #666; }
+
+        .motto {
+            max-width: 960px; margin: 0 auto; padding: 10px 24px 48px;
+            text-align: center; color: #999; font-style: italic; font-size: 0.9rem;
+            position: relative; z-index: 1; letter-spacing: 0.5px;
+        }
+
+        .tabs {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            padding: 22px 0 4px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tabs a {
+            font-size: 0.85rem; letter-spacing: 0.5px;
+            color: #777; text-decoration: none;
+            padding: 5px 16px; border-radius: 3px;
+            border: 1px solid transparent;
+        }
+        .tabs a:hover { color: #000; }
+        .tabs a.active { color: #000; border-color: #ccc; background: #fff; }
+
+        .panel { display: none; padding: 26px 0 10px; }
+        .panel.active { display: block; }
+
+        @media (max-width: 640px) {
+            body { font-size: 17px; }
+            .page { padding-top: 104px; }
+            .hero h1 { font-size: 1.7rem; }
+            .entry { flex-direction: column; gap: 2px; }
+            .entry .left { width: auto; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="noise-bg"></div>
+<div class="noise"></div>
+
+<a href="index.html" class="back">zaveshaa</a>
+
+<div class="page">
+    <div class="hero">
+        <h1>Dmitry Aleksandrov</h1>
+        <div class="role">currently open to work</div>
+        <div class="meta">
+            <span><a href="https://github.com/zaveshaa">github.com/zaveshaa</a></span>
+            <span><a href="#" id="email-link">i@zaveshaadev.ru</a></span>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <a href="#projects" data-tab="projects" class="active">projects</a>
+        <a href="#open-source" data-tab="open-source">open source</a>
+        <a href="#skills" data-tab="skills">skills</a>
+        <a href="#education" data-tab="education">education</a>
+        <a href="#courses" data-tab="courses">courses</a>
+    </div>
+
+    <section id="projects" class="panel active">
+        <h2><span class="no">01</span>Personal projects</h2>
+        <div class="entry">
+            <div class="left">soon</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Coming soon</span>
+                </div>
+                <div class="desc">Under construction.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="open-source" class="panel">
+        <h2><span class="no">02</span>Open source</h2>
+        <div class="metrics">
+        <div class="metric"><div class="num" id="m-prs">42</div><div class="lbl">pull requests</div></div>
+        <div class="metric"><div class="num" id="m-merged">16</div><div class="lbl">merged</div></div>
+        <div class="metric"><div class="num" id="m-open">16</div><div class="lbl">open / in review</div></div>
+        <div class="metric"><div class="num" id="m-projects">27</div><div class="lbl">projects touched</div></div>
+    </div>
+
+        <div class="group-title">Bug fixes &amp; features</div>
+
+        <div class="entry" data-pr="openrocket/openrocket/3279">
+            <div class="left">openrocket</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix supersonic fin CP singularity for low-aspect-ratio fins</span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/openrocket/openrocket/pull/3279">#3279</a></span>
+                </div>
+                <div class="desc">Aerodynamics — Java. Roots out an instability in the supersonic center-of-pressure model.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="luau-lang/luau/2704">
+            <div class="left">luau</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix <code>os.time</code> return type when called with a date table</span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/luau-lang/luau/pull/2704">#2704</a></span>
+                </div>
+                <div class="desc">Type checker fix (C++).</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="ankitects/anki/5407">
+            <div class="left">anki</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Hide FSRS-only sort orders when FSRS is disabled</span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/ankitects/anki/pull/5407">#5407</a></span>
+                </div>
+                <div class="desc">Python / TypeScript — filtered deck dialog.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="renpy/renpy/7299">
+            <div class="left">renpy</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix <code>config.raise_image_load_exceptions</code> ignoring <code>developer</code></span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/renpy/renpy/pull/7299">#7299</a></span>
+                </div>
+                <div class="desc">Python — configuration handling.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="godotengine/godot/122734">
+            <div class="left">godot</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Unit tests for <code>FontVariation</code></span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/godotengine/godot/pull/122734">#122734</a></span>
+                </div>
+                <div class="desc">C++ — test coverage for the font module.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="endless-sky/endless-sky/12654">
+            <div class="left">endless-sky</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Only warn about weapons needing launcher capacity when relevant</span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/endless-sky/endless-sky/pull/12654">#12654</a></span>
+                </div>
+                <div class="desc">C++ — outfitter UI logic.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="diesel-rs/diesel/5169">
+            <div class="left">diesel</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Integration tests for SQLite json <code>-&gt;</code> / <code>-&gt;&gt;</code> operators</span>
+                    <span class="tag open">open</span>
+                    <span class="pr"><a href="https://github.com/diesel-rs/diesel/pull/5169">#5169</a></span>
+                </div>
+                <div class="desc">Rust — closes a test-coverage gap for the JSON path operators.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="raysan5/raylib/6086">
+            <div class="left">raylib</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Propagate Cocoa frameworks to static raylib consumers on macOS</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/raysan5/raylib/pull/6086">#6086</a></span>
+                </div>
+                <div class="desc">CMake build-system fix.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="raysan5/raylib/6079">
+            <div class="left">raylib</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix standalone configuration of the examples project</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/raysan5/raylib/pull/6079">#6079</a></span>
+                </div>
+                <div class="desc">CMake.</div>
+            </div>
+        </div>
+
+        <div class="group-title">Docs &amp; maintainability</div>
+
+        <div class="entry" data-pr="python/cpython/156227">
+            <div class="left">cpython</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix doubled-word typos in the <code>difflib</code> documentation</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/python/cpython/pull/156227">#156227</a></span>
+                </div>
+                <div class="desc">C / Python — CPython standard-library docs.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="kovidgoyal/kitty/10398">
+            <div class="left">kitty</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix typos in docs and the <code>choose_files</code> kitten</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/kovidgoyal/kitty/pull/10398">#10398</a></span>
+                </div>
+                <div class="desc">Python — terminal emulator docs and kitten.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="renpy/renpy/7317">
+            <div class="left">renpy</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Document the <code>renpy.pygame</code> module</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/renpy/renpy/pull/7317">#7317</a></span>
+                </div>
+                <div class="desc">Python documentation.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="opencv/opencv/29777">
+            <div class="left">opencv</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Fix typos across tutorials and <code>core.hpp</code> reference</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/opencv/opencv/pull/29777">#29777</a></span>
+                </div>
+                <div class="desc">C++ — API reference quality.</div>
+            </div>
+        </div>
+
+        <div class="entry" data-pr="gfx-rs/wgpu/10147">
+            <div class="left">wgpu</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Normalize capitalization of human-readable limit labels</span>
+                    <span class="tag merged">merged</span>
+                    <span class="pr"><a href="https://github.com/gfx-rs/wgpu/pull/10147">#10147</a></span>
+                </div>
+                <div class="desc">Rust — API message quality in the wgpu adapter.</div>
+            </div>
+        </div>
+
+        <div class="group-title">All contributions &mdash; live from GitHub</div>
+        <p class="placeholder" id="contrib-loading">loading from GitHub&hellip;</p>
+        <div id="all-contribs"></div>
+    </section>
+
+    <section id="skills" class="panel">
+        <h2><span class="no">03</span>Skills</h2>
+        <div class="stack-grid">
+            <div class="stack-item"><strong>Languages</strong> <span>&mdash; Python, C / C++, Rust, Lua</span></div>
+            <div class="stack-item"><strong>Platform</strong> <span>&mdash; Linux, bash / shell, SQL</span></div>
+            <div class="stack-item"><strong>Build</strong> <span>&mdash; cargo, CMake, CI-driven development</span></div>
+            <div class="stack-item"><strong>Testing</strong> <span>&mdash; unit and integration tests across languages</span></div>
+            <div class="stack-item"><strong>Tooling</strong> <span>&mdash; git, GitHub, upstream code review</span></div>
+            <div class="stack-item"><strong>Practice</strong> <span>&mdash; small, focused changes that get merged</span></div>
+        </div>
+    </section>
+
+    <section id="education" class="panel">
+        <h2><span class="no">04</span>Education</h2>
+        <div class="entry">
+            <div class="left">secondary</div>
+            <div class="main">
+                <div class="row1"><span class="title">School No. 22</span></div>
+                <div class="desc">Grades 1&ndash;9.</div>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="left">secondary</div>
+            <div class="main">
+                <div class="row1"><span class="title">School No. 2</span></div>
+                <div class="desc">Grades 10&ndash;11.</div>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="left">vocational</div>
+            <div class="main">
+                <div class="row1"><span class="title">Polytechnic College, Novgorod State University</span></div>
+                <div class="desc">Secondary vocational education (СПО).</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" class="panel">
+        <h2><span class="no">05</span>Courses</h2>
+        <div class="entry">
+            <div class="left">year 1</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Yandex Lyceum</span>
+                    <span class="tag merged">graduate</span>
+                </div>
+                <div class="desc">Programming fundamentals in Python.</div>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="left">year 2</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">Yandex Lyceum</span>
+                    <span class="tag merged">certified</span>
+                </div>
+                <div class="desc">Industrial programming fundamentals &mdash; certificate 2502210475.</div>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="left">piscine</div>
+            <div class="main">
+                <div class="row1">
+                    <span class="title">School 21</span>
+                    <span class="tag merged">graduate</span>
+                </div>
+                <div class="desc">Piscine (intensive admission stage, C, peer review).</div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="motto">Pro mundo ultra fatum nitendum est.</div>
+
+<style>
+    #toast {
+        position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+        background: #111; color: #fafaf9; font-family: Georgia, serif;
+        font-size: 0.82rem; padding: 8px 20px; z-index: 5;
+        opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    }
+    #toast.show { opacity: 1; }
+</style>
+<pre id="toast"></pre>
+<script>
+    const copy = (el, e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText('i@zaveshaadev.ru');
+        const toast = document.getElementById('toast');
+        toast.textContent = 'copied: i@zaveshaadev.ru';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1500);
+    };
+    document.getElementById('email-link').addEventListener('click', (e) => copy(e.currentTarget, e));
+</script>
+
+<script>
+(function () {
+    const tabs = Array.from(document.querySelectorAll('.tabs a'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+
+    function show(name) {
+        const next = panels.find(p => p.id === name);
+        if (!next) return;
+        panels.forEach(p => p.classList.toggle('active', p === next));
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    }
+
+    tabs.forEach(t => t.addEventListener('click', (e) => {
+        e.preventDefault();
+        show(t.dataset.tab);
+        history.pushState(null, '', '#' + t.dataset.tab);
+    }));
+
+    window.addEventListener('hashchange', () => {
+        const name = location.hash.slice(1);
+        if (name) show(name);
+    });
+
+    const initial = location.hash.slice(1);
+    if (initial) show(initial);
+})();
+</script>
+
+<script>
+(function () {
+    const AUTHOR = 'zaveshaa';
+    const CACHE_KEY = 'zaveshaa_prs_v1';
+    const CACHE_TTL = 15 * 60 * 1000;
+    const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const loadingEl = document.getElementById('contrib-loading');
+    const box = document.getElementById('all-contribs');
+    let lastCache = null;
+
+    function tag(el, status, label) {
+        const t = el.querySelector('.tag');
+        if (t) { t.className = 'tag ' + status; t.textContent = label; }
+    }
+
+    function syncSelected(items) {
+        document.querySelectorAll('[data-pr]').forEach(el => {
+            const [repo, num] = el.dataset.pr.split('/').slice(-2);
+            const found = items.find(i => String(i.number) === String(num) && (i.repo_short === repo || i.repo === repo));
+            if (!found) return;
+            const titleEl = el.querySelector('.title');
+            if (titleEl) {
+                titleEl.innerHTML = '';
+                titleEl.textContent = found.title;
+            }
+            if (found.state === 'open') tag(el, 'open', 'open');
+            else if (found.merged_at) tag(el, 'merged', 'merged');
+        });
+    }
+
+    function render(items) {
+        document.getElementById('m-prs').textContent = items.length;
+
+        const merged = items.filter(i => i.merged_at).length;
+        const open = items.filter(i => i.state === 'open').length;
+        const owners = new Set(items.map(i => i.owner)).size;
+
+        document.getElementById('m-merged').textContent = merged;
+        document.getElementById('m-open').textContent = open;
+        document.getElementById('m-projects').textContent = owners;
+
+        syncSelected(items);
+
+        if (loadingEl) loadingEl.remove();
+        if (!box) return;
+
+        const now = Date.now();
+        box.innerHTML = '<div style="color:#999;font-style:italic" id="freshness">updated: ' + new Date(now).toISOString().slice(0, 16).replace('T', ' ') + ' UTC</div>';
+
+        const groups = { open: [], merged: [], closed: [] };
+        items.forEach(i => {
+            if (i.state === 'open') groups.open.push(i);
+            else if (i.merged_at) groups.merged.push(i);
+            else groups.closed.push(i);
+        });
+
+        const labels = { open: 'In review', merged: 'Merged', closed: 'Closed' };
+        Object.keys(groups).forEach(k => {
+            if (!groups[k].length) return;
+            const g = document.createElement('div');
+            g.innerHTML = '<div class="group-title">' + labels[k] + ' &mdash; ' + groups[k].length + '</div>';
+            groups[k].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).forEach(i => {
+                const e = document.createElement('div');
+                e.className = 'entry';
+                e.innerHTML = '<div class="left">' + esc(i.owner) + '</div><div class="main">'
+                    + '<div class="row1"><span class="title"><a href="' + esc(i.url) + '">' + esc(i.title) + '</a></span>'
+                    + '<span class="pr"><a href="' + esc(i.url) + '">#' + i.number + '</a></span></div>'
+                    + '<div class="desc">' + esc(i.repo) + ' &middot; ' + esc(i.created_at.slice(0, 10)) + '</div></div>';
+                g.appendChild(e);
+            });
+            box.appendChild(g);
+        });
+    }
+
+    function fail(msg) {
+        if (loadingEl) loadingEl.textContent = msg;
+    }
+
+    async function load() {
+        try {
+            const cachedRaw = localStorage.getItem(CACHE_KEY);
+            if (cachedRaw) {
+                const c = JSON.parse(cachedRaw);
+                if (Date.now() - c.ts < CACHE_TTL) { render(c.items); return; }
+                lastCache = c;
+            }
+        } catch (e) {}
+
+        try {
+            const res = await fetch('https://api.github.com/search/issues?q=author:' + AUTHOR + '+type:pr&sort=created&order=desc&per_page=100');
+            if (!res.ok) {
+                if (lastCache) { render(lastCache.items); return; }
+                fail('GitHub API error (' + res.status + ') — page loaded with static data.');
+                return;
+            }
+            const data = await res.json();
+            const items = (data.items || []).flatMap(it => {
+                const rr = (it.repository_url || '').split('/repos/')[1] || '';
+                const owner = rr.split('/')[0] || '';
+                return [{
+                    number: it.number,
+                    title: it.title,
+                    state: it.state,
+                    merged_at: (it.pull_request && it.pull_request.merged_at) || null,
+                    owner: owner,
+                    repo: rr,
+                    repo_short: rr.split('/')[1] || rr,
+                    url: it.html_url,
+                    created_at: it.created_at
+                }];
+            });
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items })); } catch (e) {}
+            render(items);
+        } catch (e) {
+            if (lastCache) { render(lastCache.items); return; }
+            fail('Could not reach GitHub — page loaded with static data.');
+        }
+    }
+    load();
+})();
+</script>
+
+</body>
+</html>
