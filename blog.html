@@ -99,6 +99,25 @@
         }
         .note-card .title { font-size: 0.95rem; line-height: 1.3; }
         .note-card .title.done { text-decoration: line-through; color: #b3b3b3; }
+        .note-card > span:first-child { font-size: 0.95rem; line-height: 1.3; }
+        .note-card .sublabel {
+            font-size: 0.78rem; line-height: 1.4; color: #8d8d8d;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+        .note-card.finished { background: #e2e2e2; border-color: #c9c9c9; }
+        .note-card.finished > span:first-child {
+            text-decoration: line-through; color: #b3b3b3;
+        }
+        .note-card.pending {
+            background: #eceae4; border-style: dashed; border-color: #dcd8cf;
+            color: #bcb9b1; cursor: default;
+        }
+        .note-card.pending .sublabel { color: #cbc8c1; }
+
+        .count {
+            font-size: 0.8rem; color: #999; margin-top: 14px;
+            font-family: "Courier New", Courier, monospace;
+        }
 
         @media (max-width: 480px) {
             .title { font-size: 1.8rem; }
@@ -123,83 +142,36 @@
     <div class="folder">
         <div class="folder-head">notes <span class="tab">~/notes</span></div>
         <div class="notes-grid">
-            <a class="note-card" href="notes/university.html">
-                <span>university</span>
-            </a>
-            <a class="note-card" href="notes/insurgency1.html">
-                <span>insurgency 1</span>
-            </a>
-            <a class="note-card" href="notes/insurgency2.html">
-                <span>insurgency 2</span>
-            </a>
-            <a class="note-card" href="notes/prod.html">
-                <span>PROD</span>
-            </a>
-            <a class="note-card" href="notes/school1.html">
-                <span>school 1</span>
-            </a>
-            <a class="note-card" href="notes/school2.html">
-                <span>school 2</span>
-            </a>
-            <a class="note-card" href="notes/friends.html">
-                <span>friends</span>
-            </a>
-            <a class="note-card" href="notes/love.html">
-                <span>love</span>
-            </a>
-            <a class="note-card" href="notes/edc.html">
-                <span>edc</span>
-            </a>
-            <a class="note-card" href="notes/productivity.html">
-                <span class="title done">productivity</span>
-            </a>
-            <a class="note-card" href="notes/2026setup.html">
-                <span>2026 setup</span>
-            </a>
-            <a class="note-card" href="notes/favouritebooks.html">
-                <span>favourite books</span>
-            </a>
-            <a class="note-card" href="notes/favouritedevices.html">
-                <span>favourite devices</span>
-            </a>
-            <a class="note-card" href="notes/russia.html">
-                <span>russia</span>
-            </a>
-            <a class="note-card" href="notes/polytics.html">
-                <span>polytics</span>
-            </a>
-            <a class="note-card" href="notes/games.html">
-                <span>games</span>
-            </a>
-            <a class="note-card" href="notes/anime.html">
-                <span>anime</span>
-            </a>
-            <a class="note-card" href="notes/sport.html">
-                <span>sport</span>
-            </a>
-            <a class="note-card" href="notes/social.html">
-                <span>social</span>
-            </a>
-            <a class="note-card" href="notes/01.html">
-                <span>01</span>
-            </a>
-            <a class="note-card" href="notes/goalsplans.html">
-                <span>goals/plans</span>
-            </a>
-            <a class="note-card" href="notes/music.html">
-                <span>music</span>
-            </a>
-            <a class="note-card" href="notes/porn.html">
-                <span>porn</span>
-            </a>
-            <a class="note-card" href="notes/envy.html">
-                <span>envy</span>
-            </a>
-            <a class="note-card" href="notes/startcondition.html">
-                <span>start condition</span>
-            </a>
-        </div>
+<!-- posts:start -->
+            <div class="note-card pending"><span>university</span></div>
+            <div class="note-card pending"><span>insurgency 1</span></div>
+            <div class="note-card pending"><span>insurgency 2</span></div>
+            <div class="note-card pending"><span>PROD</span></div>
+            <div class="note-card pending"><span>school 1</span></div>
+            <div class="note-card pending"><span>school 2</span></div>
+            <div class="note-card pending"><span>friends</span></div>
+            <div class="note-card pending"><span>love</span></div>
+            <div class="note-card pending"><span>edc</span></div>
+            <div class="note-card pending"><span>productivity</span></div>
+            <div class="note-card pending"><span>2026 setup</span></div>
+            <div class="note-card pending"><span>favourite books</span></div>
+            <div class="note-card pending"><span>favourite devices</span></div>
+            <div class="note-card pending"><span>russia</span></div>
+            <div class="note-card pending"><span>polytics</span></div>
+            <div class="note-card pending"><span>games</span></div>
+            <div class="note-card pending"><span>anime</span></div>
+            <div class="note-card pending"><span>sport</span></div>
+            <div class="note-card pending"><span>social</span></div>
+            <div class="note-card pending"><span>01</span></div>
+            <div class="note-card pending"><span>goals/plans</span></div>
+            <div class="note-card pending"><span>music</span></div>
+            <div class="note-card pending"><span>porn</span></div>
+            <div class="note-card pending"><span>envy</span></div>
+            <div class="note-card pending"><span>start condition</span></div>
+        <!-- posts:end -->
+            </div>
     </div>
+    <p class="count" id="post-count"><!-- count:start -->0 written / 25 planned &mdash; dashed cards have no page yet<!-- count:end --></p>
 </div>
 </body>
 </html>

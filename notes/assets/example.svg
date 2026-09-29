@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-label="Placeholder image">
+  <rect width="800" height="400" fill="#1b1815"/>
+  <g fill="none" stroke="#b4432c" stroke-width="2">
+    <circle cx="200" cy="200" r="90"/>
+    <circle cx="200" cy="200" r="55"/>
+    <circle cx="200" cy="200" r="20"/>
+  </g>
+  <g stroke="#e8e0d4" stroke-width="1" opacity="0.35">
+    <line x1="200" y1="40" x2="200" y2="360"/>
+    <line x1="40" y1="200" x2="360" y2="200"/>
+    <line x1="80" y1="80" x2="320" y2="320"/>
+    <line x1="320" y1="80" x2="80" y2="320"/>
+  </g>
+  <text x="430" y="190" fill="#e8e0d4" font-family="Georgia, serif" font-size="30">800 &#215; 400</text>
+  <text x="430" y="228" fill="#b4432c" font-family="monospace" font-size="16">notes/assets/example.svg</text>
+  <text x="430" y="262" fill="#8a8175" font-family="monospace" font-size="13">replace or delete this file</text>
+</svg>

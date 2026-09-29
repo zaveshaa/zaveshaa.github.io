@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+  title:     Post title
+  date:      2026-09-29
+  summary:   One line that shows up on the blog index.
+  status:    draft | done   (draft = hidden from the RSS feed)
+
+  Everything below this comment is yours. This file is the whole post.
+  Nothing on the site styles it, so you can use any font, any CSS, any
+  images, any layout, and the page will look exactly as you wrote it.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post title</title>
+
+<!-- Any webfont. This one is deliberately loud so you can see it worked. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+    /* Your CSS starts here and goes as far as you want. Nothing is inherited
+       from the site, so there is nothing to fight with. */
+    :root {
+        --ink: #14110f;
+        --paper: #f4efe6;
+        --accent: #b4432c;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Bodoni Moda", Didot, "Times New Roman", serif;
+        font-size: 19px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 48px 24px 120px; }
+
+    /* A different font for code, just because you can. */
+    code, pre { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+    a { color: var(--accent); text-underline-offset: 3px; }
+
+    .back {
+        position: fixed; top: 22px; left: 26px; z-index: 2;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem; letter-spacing: 0.5px;
+        text-decoration: none; color: var(--ink); opacity: 0.55;
+    }
+    .back:hover { opacity: 1; }
+
+    h1 {
+        font-size: 2.6rem; font-weight: 700; line-height: 1.12;
+        letter-spacing: -0.5px; margin: 24px 0 10px;
+    }
+    .date {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem; color: var(--accent); letter-spacing: 1px;
+    }
+    p { margin: 20px 0; }
+    .lede { font-size: 1.15rem; font-style: italic; }
+    hr { border: none; border-top: 1px solid #d9d0c0; margin: 40px 0; }
+
+    /* Images work from anywhere: a local file next to this one, or a URL. */
+    figure { margin: 32px 0; }
+    figure img { width: 100%; height: auto; display: block; border-radius: 3px; }
+    figcaption {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem; color: #7a6f60; margin-top: 8px;
+    }
+
+    /* Side-by-side: the layout is yours, use grid, flex, or neither. */
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+    .duo > * { background: #eae2d4; padding: 16px; border-radius: 3px; }
+    @media (max-width: 560px) { .duo { grid-template-columns: 1fr; } }
+
+    blockquote {
+        border-left: 3px solid var(--accent);
+        padding-left: 18px; font-style: italic; margin: 28px 0; color: #4a4038;
+    }
+    pre {
+        background: #1b1815; color: #e8e0d4; padding: 16px 18px;
+        border-radius: 4px; overflow-x: auto; font-size: 0.85rem; line-height: 1.6;
+    }
+    pre code { color: inherit; }
+    table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #ddd3c2; padding: 8px 10px; text-align: left; }
+    th { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; text-transform: uppercase; }
+    .end {
+        margin-top: 60px; padding-top: 20px; border-top: 1px solid #d9d0c0;
+        font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: #7a6f60;
+    }
+</style>
+</head>
+<body>
+
+<a class="back" href="../blog.html">&larr; blog</a>
+
+<div class="wrap">
+    <div class="date">2026-09-29</div>
+    <h1>Post title</h1>
+
+    <p class="lede">A one-line summary, set in italic to set it apart.</p>
+
+    <p>Body text goes here. Set in Bodoni Moda because nothing stops you from
+    doing that. Resize the window — the type reflows on its own.</p>
+
+    <blockquote>Pull quotes look like this, and you can have as many as you like.</blockquote>
+
+    <h2>A subheading</h2>
+    <p>Markdown is not required and not used. This is plain HTML, so
+    <code>inline code</code> and blocks like this one work without a build step:</p>
+
+    <pre><code>def notes() -&gt; str:
+    return "no build step"</code></pre>
+
+    <div class="duo">
+        <div><strong>Column one</strong><br>Anything you want here.</div>
+        <div><strong>Column two</strong><br>Including this.</div>
+    </div>
+
+    <figure>
+        <!-- Local image, sitting next to this file. -->
+        <img src="assets/example.svg" alt="A local image in the notes folder" width="800" height="400">
+        <figcaption>assets/example.svg — local, committed to the repo</figcaption>
+    </figure>
+
+    <figure>
+        <!-- Or a remote image. -->
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+             alt="A remote image" width="128" height="128">
+        <figcaption>or any URL on the internet</figcaption>
+    </figure>
+
+    <table>
+        <tr><th>Key</th><th>Value</th></tr>
+        <tr><td>anything</td><td>goes</td></tr>
+    </table>
+
+    <div class="end">
+        <a href="../blog.html">&larr; back to the index</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -90,12 +90,14 @@
         }
         .tag.merged { color: #3d6b3d; border-color: #9cbf9c; background: #f4f8f4; }
         .tag.open { color: #7a5a00; border-color: #d6c08a; background: #fbf8ef; }
+        .tag.closed { color: #777; border-color: #c8c8c8; background: #f6f6f4; }
 
         .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
         .stack-item { font-size: 1rem; color: #333; padding: 6px 0; }
         .stack-item strong { font-weight: 400; letter-spacing: 0.5px; }
         .stack-item span { color: #888; }
 
+        .snapshot { color: #888; font-size: 0.88rem; margin: -14px 0 4px; }
         .placeholder { color: #999; font-style: italic; font-size: 0.95rem; }
         .placeholder a { color: #666; }
 
@@ -172,11 +174,11 @@
     <section id="open-source" class="panel">
         <h2><span class="no">02</span>Open source</h2>
         <div class="metrics">
-        <div class="metric"><div class="num" id="m-prs">42</div><div class="lbl">pull requests</div></div>
-        <div class="metric"><div class="num" id="m-merged">16</div><div class="lbl">merged</div></div>
-        <div class="metric"><div class="num" id="m-open">16</div><div class="lbl">open / in review</div></div>
-        <div class="metric"><div class="num" id="m-projects">27</div><div class="lbl">projects touched</div></div>
-    </div>
+        <div class="metric"><div class="num" id="m-prs">63</div><div class="lbl">pull requests</div></div>
+        <div class="metric"><div class="num" id="m-merged">31</div><div class="lbl">merged</div></div>
+        <div class="metric"><div class="num" id="m-open">11</div><div class="lbl">open / in review</div></div>
+        <div class="metric"><div class="num" id="m-projects">28</div><div class="lbl">repositories</div></div>
+        <p class="snapshot">Snapshot of 2026-09-29, refreshed from the GitHub API when the page loads. Of the 63 pull requests, 21 were closed without being merged.</p>
 
         <div class="group-title">Bug fixes &amp; features</div>
 
@@ -185,7 +187,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Fix supersonic fin CP singularity for low-aspect-ratio fins</span>
-                    <span class="tag open">open</span>
+                    <span class="tag closed">closed</span>
                     <span class="pr"><a href="https://github.com/openrocket/openrocket/pull/3279">#3279</a></span>
                 </div>
                 <div class="desc">Aerodynamics — Java. Roots out an instability in the supersonic center-of-pressure model.</div>
@@ -197,7 +199,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Fix <code>os.time</code> return type when called with a date table</span>
-                    <span class="tag open">open</span>
+                    <span class="tag closed">closed</span>
                     <span class="pr"><a href="https://github.com/luau-lang/luau/pull/2704">#2704</a></span>
                 </div>
                 <div class="desc">Type checker fix (C++).</div>
@@ -209,7 +211,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Hide FSRS-only sort orders when FSRS is disabled</span>
-                    <span class="tag open">open</span>
+                    <span class="tag merged">merged</span>
                     <span class="pr"><a href="https://github.com/ankitects/anki/pull/5407">#5407</a></span>
                 </div>
                 <div class="desc">Python / TypeScript — filtered deck dialog.</div>
@@ -221,7 +223,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Fix <code>config.raise_image_load_exceptions</code> ignoring <code>developer</code></span>
-                    <span class="tag open">open</span>
+                    <span class="tag merged">merged</span>
                     <span class="pr"><a href="https://github.com/renpy/renpy/pull/7299">#7299</a></span>
                 </div>
                 <div class="desc">Python — configuration handling.</div>
@@ -233,7 +235,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Unit tests for <code>FontVariation</code></span>
-                    <span class="tag open">open</span>
+                    <span class="tag closed">closed</span>
                     <span class="pr"><a href="https://github.com/godotengine/godot/pull/122734">#122734</a></span>
                 </div>
                 <div class="desc">C++ — test coverage for the font module.</div>
@@ -245,7 +247,7 @@
             <div class="main">
                 <div class="row1">
                     <span class="title">Only warn about weapons needing launcher capacity when relevant</span>
-                    <span class="tag open">open</span>
+                    <span class="tag closed">closed</span>
                     <span class="pr"><a href="https://github.com/endless-sky/endless-sky/pull/12654">#12654</a></span>
                 </div>
                 <div class="desc">C++ — outfitter UI logic.</div>
@@ -363,7 +365,7 @@
             <div class="stack-item"><strong>Build</strong> <span>&mdash; cargo, CMake, CI-driven development</span></div>
             <div class="stack-item"><strong>Testing</strong> <span>&mdash; unit and integration tests across languages</span></div>
             <div class="stack-item"><strong>Tooling</strong> <span>&mdash; git, GitHub, upstream code review</span></div>
-            <div class="stack-item"><strong>Practice</strong> <span>&mdash; small, focused changes that get merged</span></div>
+            <div class="stack-item"><strong>Practice</strong> <span>&mdash; small, focused, self-directed changes; 31 merged upstream</span></div>
         </div>
     </section>
 
@@ -489,6 +491,7 @@
     const loadingEl = document.getElementById('contrib-loading');
     const box = document.getElementById('all-contribs');
     let lastCache = null;
+    let apiTotal = null;
 
     function tag(el, status, label) {
         const t = el.querySelector('.tag');
@@ -507,19 +510,20 @@
             }
             if (found.state === 'open') tag(el, 'open', 'open');
             else if (found.merged_at) tag(el, 'merged', 'merged');
+            else tag(el, 'closed', 'closed');
         });
     }
 
     function render(items) {
-        document.getElementById('m-prs').textContent = items.length;
+        document.getElementById('m-prs').textContent = apiTotal || items.length;
 
         const merged = items.filter(i => i.merged_at).length;
         const open = items.filter(i => i.state === 'open').length;
-        const owners = new Set(items.map(i => i.owner)).size;
+        const repos = new Set(items.map(i => i.repo)).size;
 
         document.getElementById('m-merged').textContent = merged;
         document.getElementById('m-open').textContent = open;
-        document.getElementById('m-projects').textContent = owners;
+        document.getElementById('m-projects').textContent = repos;
 
         syncSelected(items);
 
@@ -572,10 +576,11 @@
             const res = await fetch('https://api.github.com/search/issues?q=author:' + AUTHOR + '+type:pr&sort=created&order=desc&per_page=100');
             if (!res.ok) {
                 if (lastCache) { render(lastCache.items); return; }
-                fail('GitHub API error (' + res.status + ') — page loaded with static data.');
+                fail('GitHub API error (' + res.status + ') — showing the 2026-09-29 snapshot.');
                 return;
             }
             const data = await res.json();
+            apiTotal = data.total_count || null;
             const items = (data.items || []).flatMap(it => {
                 const rr = (it.repository_url || '').split('/repos/')[1] || '';
                 const owner = rr.split('/')[0] || '';
@@ -595,7 +600,7 @@
             render(items);
         } catch (e) {
             if (lastCache) { render(lastCache.items); return; }
-            fail('Could not reach GitHub — page loaded with static data.');
+            fail('Could not reach GitHub — showing the 2026-09-29 snapshot.');
         }
     }
     load();
