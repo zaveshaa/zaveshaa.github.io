@@ -5,5 +5,13 @@
     <link>https://zaveshaa.github.io/blog.html</link>
     <description>personalia</description>
     <language>en</language>
+
+    <item>
+      <title>University</title>
+      <link>https://zaveshaa.github.io/notes/university.html</link>
+      <guid isPermaLink="true">https://zaveshaa.github.io/notes/university.html</guid>
+      <description>Deployment check, removed after verification.</description>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
   </channel>
 </rss>
