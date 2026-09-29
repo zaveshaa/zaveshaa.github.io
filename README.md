@@ -39,6 +39,12 @@ links. A file that is not in `PLANNED` still shows up, appended at the end.
 Underscore-prefixed files are ignored, which is how `_template.html` stays out
 of the index. `status: draft` keeps a post out of the feed without hiding it.
 
+GitHub Pages builds this site with Jekyll, which ignores any file or directory
+whose name starts with `_` or `.`. So a note called `_draft-thing.html` will
+appear on the index but never be published — keep note slugs to letters, digits
+and dashes. The upshot is that `_template.html` is a working file in the repo
+and is never served publicly, which is what you want from scaffolding.
+
 ## Local preview
 
 ```sh
