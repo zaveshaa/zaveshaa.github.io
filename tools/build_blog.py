@@ -1,32 +1,4 @@
 #!/usr/bin/env python3
-"""Regenerate the blog index and the RSS feed from the files in notes/.
-
-How a post works
-----------------
-Every post is one self-contained file in notes/, named <slug>.html. The only
-part the tooling reads is a block of HTML comments at the very top:
-
-    <!--
-      title:   Something
-      date:    2026-09-29
-      summary: One line for the index.
-      status:  draft        (optional; "draft" keeps it out of the feed)
-    -->
-
-Everything else in the file is yours. Nothing on the site styles it, so any
-font, CSS, image or layout works without fighting anything.
-
-Adding a post
--------------
-1. cp notes/_template.html notes/my-post.html
-2. edit it
-3. python3 tools/build_blog.py
-
-A planned note with no file yet still shows on the index, but greyed out and
-not a link, so nothing on the site is a dead link. Files starting with an
-underscore are ignored.
-"""
-
 import html
 import pathlib
 import re
@@ -40,9 +12,6 @@ FEED = ROOT / "feed.xml"
 
 SITE = "https://zaveshaa.github.io"
 
-# Notes you intend to write, in the order you want them. A note gets a card on
-# the index as soon as it is listed here; it becomes a link when the file
-# exists. Keep this list, add to it, or drop entries freely.
 PLANNED = [
     ("university", "university"),
     ("insurgency1", "insurgency 1"),
@@ -77,7 +46,6 @@ DATE_FMT = "%Y-%m-%d"
 
 
 def read_meta(path):
-    """Pull the comment block off the top of a post."""
     head = path.read_text(encoding="utf-8")[:4000]
     block = META.search(head)
     if not block:
@@ -89,7 +57,6 @@ def read_meta(path):
 
 
 def collect():
-    """Return {slug: meta} for every real post, newest first."""
     posts = {}
     if not NOTES.is_dir():
         return posts
@@ -117,7 +84,6 @@ def sort_key(post):
 
 
 def card(post, done):
-    """One card. Written posts link out; unwritten ones are inert."""
     label = html.escape(post["title"])
     if post.get("summary"):
         label += '<span class="sublabel">%s</span>' % html.escape(post["summary"])
@@ -134,7 +100,6 @@ def card(post, done):
 
 
 def render_grid(posts):
-    """Cards in the author's PLANNED order; any extra files appended by date."""
     planned_slugs = {s for s, _ in PLANNED}
     out = []
     for slug, title in PLANNED:
@@ -151,7 +116,6 @@ def render_grid(posts):
 
 
 def splice(text, start, end, inner):
-    """Replace whatever sits between two markers, keeping the markers."""
     if start not in text or end not in text:
         return None
     head, rest = text.split(start, 1)

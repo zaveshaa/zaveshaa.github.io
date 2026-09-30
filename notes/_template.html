@@ -3,11 +3,7 @@
   title:     Post title
   date:      2026-09-29
   summary:   One line that shows up on the blog index.
-  status:    draft | done   (draft = hidden from the RSS feed)
-
-  Everything below this comment is yours. This file is the whole post.
-  Nothing on the site styles it, so you can use any font, any CSS, any
-  images, any layout, and the page will look exactly as you wrote it.
+  status:    draft | done
 -->
 <html lang="en">
 <head>
@@ -15,14 +11,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Post title</title>
 
-<!-- Any webfont. This one is deliberately loud so you can see it worked. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 
 <style>
-    /* Your CSS starts here and goes as far as you want. Nothing is inherited
-       from the site, so there is nothing to fight with. */
     :root {
         --ink: #14110f;
         --paper: #f4efe6;
@@ -39,7 +32,6 @@
     }
     .wrap { max-width: 680px; margin: 0 auto; padding: 48px 24px 120px; }
 
-    /* A different font for code, just because you can. */
     code, pre { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 
     a { color: var(--accent); text-underline-offset: 3px; }
@@ -64,7 +56,6 @@
     .lede { font-size: 1.15rem; font-style: italic; }
     hr { border: none; border-top: 1px solid #d9d0c0; margin: 40px 0; }
 
-    /* Images work from anywhere: a local file next to this one, or a URL. */
     figure { margin: 32px 0; }
     figure img { width: 100%; height: auto; display: block; border-radius: 3px; }
     figcaption {
@@ -72,7 +63,6 @@
         font-size: 0.78rem; color: #7a6f60; margin-top: 8px;
     }
 
-    /* Side-by-side: the layout is yours, use grid, flex, or neither. */
     .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
     .duo > * { background: #eae2d4; padding: 16px; border-radius: 3px; }
     @media (max-width: 560px) { .duo { grid-template-columns: 1fr; } }
@@ -123,13 +113,11 @@
     </div>
 
     <figure>
-        <!-- Local image, sitting next to this file. -->
         <img src="assets/example.svg" alt="A local image in the notes folder" width="800" height="400">
         <figcaption>assets/example.svg — local, committed to the repo</figcaption>
     </figure>
 
     <figure>
-        <!-- Or a remote image. -->
         <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
              alt="A remote image" width="128" height="128">
         <figcaption>or any URL on the internet</figcaption>
