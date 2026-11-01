@@ -146,7 +146,7 @@
         <div class="role">currently open to work</div>
         <div class="meta">
             <span><a href="https://github.com/zaveshaa">github.com/zaveshaa</a></span>
-            <span><a href="#" id="email-link">i@zaveshaadev.ru</a></span>
+            <span><a href="#" id="email-link">zaveshaa@gmail.com</a></span>
         </div>
     </div>
 
@@ -161,12 +161,13 @@
     <section id="projects" class="panel active">
         <h2><span class="no">01</span>Personal projects</h2>
         <div class="entry">
-            <div class="left">soon</div>
+            <div class="left">LMS3301</div>
             <div class="main">
                 <div class="row1">
-                    <span class="title">Coming soon</span>
+                    <span class="title">LMS for an introductory programming course</span>
+                    <span class="pr"><a href="https://github.com/zaveshaa/LMS3301">repo</a></span>
                 </div>
-                <div class="desc">Under construction.</div>
+                <div class="desc">University project. Python, Flask, SQLite; assignment submission and automatic test verdicts.</div>
             </div>
         </div>
     </section>
@@ -174,12 +175,12 @@
     <section id="open-source" class="panel">
         <h2><span class="no">02</span>Open source</h2>
         <div class="metrics">
-        <div class="metric"><div class="num" id="m-prs">63</div><div class="lbl">pull requests</div></div>
-        <div class="metric"><div class="num" id="m-merged">31</div><div class="lbl">merged</div></div>
-        <div class="metric"><div class="num" id="m-open">11</div><div class="lbl">open / in review</div></div>
-        <div class="metric"><div class="num" id="m-projects">28</div><div class="lbl">repositories</div></div>
+        <div class="metric"><div class="num" id="m-prs">68</div><div class="lbl">pull requests</div></div>
+        <div class="metric"><div class="num" id="m-merged">32</div><div class="lbl">merged</div></div>
+        <div class="metric"><div class="num" id="m-open">13</div><div class="lbl">open / in review</div></div>
+        <div class="metric"><div class="num" id="m-projects">31</div><div class="lbl">repositories</div></div>
         </div>
-        <p class="snapshot">Snapshot of 2026-09-29, refreshed from the GitHub API when the page loads. Of the 63 pull requests, 21 were closed without being merged.</p>
+        <p class="snapshot">Snapshot of 2026-11-01, refreshed from the GitHub API when the page loads. Of the 68 pull requests, 23 were closed without being merged.</p>
 
         <div class="group-title">Bug fixes &amp; features</div>
 
@@ -366,7 +367,8 @@
             <div class="stack-item"><strong>Build</strong> <span>&mdash; cargo, CMake, CI-driven development</span></div>
             <div class="stack-item"><strong>Testing</strong> <span>&mdash; unit and integration tests across languages</span></div>
             <div class="stack-item"><strong>Tooling</strong> <span>&mdash; git, GitHub, upstream code review</span></div>
-            <div class="stack-item"><strong>Practice</strong> <span>&mdash; small, focused, self-directed changes; 31 merged upstream</span></div>
+            <div class="stack-item"><strong>Practice</strong> <span>&mdash; small, focused, self-directed changes; 32 merged upstream</span></div>
+            <div class="stack-item"><strong>Learning</strong> <span>&mdash; Kaggle, ML basics</span></div>
         </div>
     </section>
 
@@ -445,9 +447,9 @@
 <script>
     const copy = (el, e) => {
         e.preventDefault();
-        navigator.clipboard.writeText('i@zaveshaadev.ru');
+        navigator.clipboard.writeText('zaveshaa@gmail.com');
         const toast = document.getElementById('toast');
-        toast.textContent = 'copied: i@zaveshaadev.ru';
+        toast.textContent = 'copied: zaveshaa@gmail.com';
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 1500);
     };
@@ -577,7 +579,7 @@
             const res = await fetch('https://api.github.com/search/issues?q=author:' + AUTHOR + '+type:pr&sort=created&order=desc&per_page=100');
             if (!res.ok) {
                 if (lastCache) { render(lastCache.items); return; }
-                fail('GitHub API error (' + res.status + ') — showing the 2026-09-29 snapshot.');
+                fail('GitHub API error (' + res.status + ') — showing the 2026-11-01 snapshot.');
                 return;
             }
             const data = await res.json();
@@ -601,7 +603,7 @@
             render(items);
         } catch (e) {
             if (lastCache) { render(lastCache.items); return; }
-            fail('Could not reach GitHub — showing the 2026-09-29 snapshot.');
+            fail('Could not reach GitHub — showing the 2026-11-01 snapshot.');
         }
     }
     load();
